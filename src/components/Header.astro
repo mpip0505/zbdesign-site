@@ -1,0 +1,237 @@
+---
+import Logo from './Logo.astro';
+import { site } from '../data/site';
+
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => !href.includes('#') && href !== '/' && path.startsWith(href);
+---
+
+<header class="site-header" data-header>
+  <div class="container header-row">
+    <a class="home" href="/" aria-label={`${site.name}, home`}>
+      <Logo />
+    </a>
+
+    <nav class="nav" aria-label="Main">
+      {site.nav.map((item) => (
+        <a
+          href={item.href}
+          class:list={{ 'nav-cta': item.href === '/#contact' }}
+          aria-current={isCurrent(item.href) ? 'page' : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      data-menu-toggle
+    >
+      <span class="visually-hidden" data-menu-label>
+        Open menu
+      </span>
+      <span class="bar" aria-hidden="true"></span>
+      <span class="bar" aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu" hidden data-menu>
+    <nav class="container" aria-label="Main (mobile)">
+      {site.nav.map((item) => (
+        <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+          {item.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<script>
+  import '../scripts/header';
+  import '../scripts/mobile-menu';
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  /* Translucent material: the page shows faintly through as it scrolls under.
+     It lives on a pseudo-element because backdrop-filter on the header itself
+     would trap the fixed-position mobile menu inside the header's box. */
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: rgba(255, 255, 255, 0.82);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    backdrop-filter: blur(16px) saturate(180%);
+  }
+
+  /* Soft scroll-edge fade instead of a hard divider, shown once content is underneath. */
+  .site-header::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 16px;
+    background: linear-gradient(rgba(17, 18, 24, 0.06), rgba(17, 18, 24, 0));
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .site-header.is-scrolled::after {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .site-header::before {
+      background: #ffffff;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+
+  .header-row {
+    padding-top: 28px;
+    padding-bottom: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .nav a[aria-current='page'] {
+    color: var(--navy);
+  }
+
+  /* Contact is the main action, so it reads as a button. */
+  .nav .nav-cta {
+    margin: -9px 0;
+    padding: 8px 14px;
+    border: 1px solid var(--navy);
+    color: var(--navy);
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.15s ease-out;
+  }
+
+  .nav .nav-cta:active {
+    transform: scale(0.96);
+    transition-duration: 0.08s;
+  }
+
+  @media (hover: hover) {
+    .nav a:hover {
+      color: var(--navy);
+    }
+
+    .nav .nav-cta:hover {
+      background: var(--navy);
+      color: #ffffff;
+    }
+  }
+
+  .menu-toggle {
+    display: none;
+    position: relative;
+    width: 40px;
+    height: 26px;
+    margin: 0 -8px 0 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+  }
+
+  .bar {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 8px;
+    height: 2px;
+    background: var(--ink);
+    transition: transform 0.25s ease;
+  }
+
+  .bar + .bar {
+    top: 16px;
+  }
+
+  .menu-toggle[aria-expanded='true'] .bar {
+    transform: translateY(4px) rotate(45deg);
+  }
+
+  .menu-toggle[aria-expanded='true'] .bar + .bar {
+    transform: translateY(-4px) rotate(-45deg);
+  }
+
+  .mobile-menu {
+    position: fixed;
+    inset: var(--header-h) 0 0 0;
+    background: #ffffff;
+    overflow-y: auto;
+    border-top: 1px solid var(--line);
+  }
+
+  .mobile-menu[hidden] {
+    display: none;
+  }
+
+  .mobile-menu nav {
+    display: flex;
+    flex-direction: column;
+    padding-top: 32px;
+    padding-bottom: 48px;
+  }
+
+  .mobile-menu a {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 2rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .mobile-menu a[aria-current='page'] {
+    color: var(--navy);
+  }
+
+  @media (max-width: 767px) {
+    .nav {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: block;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-header::after,
+    .nav .nav-cta,
+    .bar {
+      transition: none;
+    }
+  }
+</style>

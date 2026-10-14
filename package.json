@@ -1,0 +1,29 @@
+{
+  "name": "zbdesign-site",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "format": "prettier --write .",
+    "placeholders": "node scripts/generate-placeholders.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/manrope": "^5.3.0",
+    "astro": "^7.3.8",
+    "sharp": "^0.35.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^1.1.1",
+    "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

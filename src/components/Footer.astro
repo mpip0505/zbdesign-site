@@ -1,0 +1,48 @@
+---
+import { site } from '../data/site';
+
+interface Props {
+  variant?: 'navy' | 'light';
+  /** Top padding in px; the navy footer continues the block above it. */
+  paddingTop?: number;
+}
+
+const { variant = 'navy', paddingTop = variant === 'navy' ? 96 : 120 } = Astro.props;
+---
+
+<footer class:list={['footer', variant, { 'on-navy': variant === 'navy' }]}>
+  <div class="container inner" style={`padding-top: ${paddingTop}px`}>
+    <span>
+      &copy; {site.year} {site.legalName}
+    </span>
+    <a class={variant === 'navy' ? 'cta-inv' : 'cta-light'} href="#top">
+      Back to top &uarr;
+    </a>
+  </div>
+</footer>
+
+<style>
+  .footer.navy {
+    background: var(--navy);
+    color: var(--on-navy-muted);
+  }
+
+  .footer.light {
+    color: var(--muted);
+  }
+
+  .inner {
+    padding-bottom: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .cta-light:hover {
+    color: var(--navy);
+  }
+</style>

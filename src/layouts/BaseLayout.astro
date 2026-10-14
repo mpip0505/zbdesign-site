@@ -1,0 +1,69 @@
+---
+import '@fontsource-variable/manrope';
+import '../styles/global.css';
+import manropeLatin from '@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url';
+import Header from '../components/Header.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Absolute or root-relative URL of the Open Graph image. */
+  image?: string;
+  type?: 'website' | 'article';
+  jsonLd?: Record<string, unknown>;
+}
+
+const {
+  title,
+  description = site.description,
+  image = '/og-default.png',
+  type = 'website',
+  jsonLd,
+} = Astro.props;
+
+const fullTitle = title ? `${title} | ${site.name}` : site.title;
+// Staging builds stay out of search results until PUBLIC_INDEXABLE=true is set at launch.
+const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true';
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(image, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {!indexable && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="preload" href={manropeLatin} as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="#FFFFFF" />
+
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body id="top">
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <Header />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <slot name="footer" />
+  </body>
+</html>

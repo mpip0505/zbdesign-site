@@ -1,0 +1,242 @@
+---
+import { stageLabels, toViewerProject, type ProjectWithImages } from '../data/projects';
+
+interface Props {
+  projects: ProjectWithImages[];
+}
+
+const { projects } = Astro.props;
+const data = Object.fromEntries(
+  await Promise.all(projects.map(async (p) => [p.id, await toViewerProject(p)] as const)),
+);
+---
+
+<dialog class="viewer" aria-labelledby="viewer-caption" data-viewer>
+  <div class="viewer-top" data-viewer-chrome>
+    <div class="stages" role="group" aria-label="Project stage" data-viewer-stages>
+      {(['design', 'completion'] as const).map((stage) => (
+        <button class="stage" type="button" aria-pressed="false" data-viewer-stage={stage}>
+          {stageLabels[stage]}
+        </button>
+      ))}
+    </div>
+    <button class="v-btn v-close" type="button" aria-label="Close" data-viewer-close>
+      &times;
+    </button>
+  </div>
+
+  <div class="viewer-stage" data-viewer-track>
+    <button class="v-btn v-prev" type="button" aria-label="Previous image" data-viewer-prev>
+      &larr;
+    </button>
+    <img class="viewer-img" alt="" sizes="100vw" decoding="async" data-viewer-img />
+    <button class="v-btn v-next" type="button" aria-label="Next image" data-viewer-next>
+      &rarr;
+    </button>
+  </div>
+
+  <div class="viewer-bottom" data-viewer-chrome>
+    <p id="viewer-caption" class="viewer-caption" data-viewer-caption></p>
+    <p class="viewer-count" aria-live="polite" data-viewer-count></p>
+  </div>
+</dialog>
+
+<script type="application/json" id="viewer-data" set:html={JSON.stringify(data)} />
+<script>
+  import '../scripts/project-viewer';
+</script>
+
+<style>
+  .viewer {
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgba(17, 18, 24, 0.97);
+    color: #ffffff;
+  }
+
+  .viewer[open] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .viewer::backdrop {
+    background: transparent;
+  }
+
+  .viewer :focus-visible {
+    outline-color: #ffffff;
+  }
+
+  .viewer-top,
+  .viewer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 24px;
+    padding: 12px var(--gutter);
+  }
+
+  .stages {
+    display: flex;
+    gap: 28px;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .stages[hidden] {
+    display: none;
+  }
+
+  .stage {
+    margin: 0;
+    padding: 6px 0;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    color: var(--on-navy-muted);
+    cursor: pointer;
+  }
+
+  @media (hover: hover) {
+    .stage:hover {
+      color: #ffffff;
+    }
+  }
+
+  .stage[aria-pressed='true'] {
+    color: #ffffff;
+    border-bottom-color: var(--teal);
+  }
+
+  .viewer-stage {
+    position: relative;
+    /* Horizontal swipes are handled in script; vertical pan and pinch-zoom stay native. */
+    touch-action: pan-y pinch-zoom;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 64px;
+  }
+
+  .viewer-img {
+    max-width: 100%;
+    max-height: 100%;
+    background-position: center;
+    background-size: cover;
+    user-select: none;
+    -webkit-user-drag: none;
+    will-change: transform, opacity;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .viewer-caption {
+    font-size: 0.875rem;
+  }
+
+  .viewer-count {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--on-navy-muted);
+  }
+
+  .v-btn {
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #ffffff;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  @media (hover: hover) {
+    .v-btn:hover {
+      color: var(--teal-light);
+    }
+  }
+
+  .v-btn:active,
+  .stage:active {
+    opacity: 0.6;
+  }
+
+  .v-btn[hidden] {
+    display: none;
+  }
+
+  .v-close {
+    margin-left: auto;
+    margin-right: -12px;
+    font-size: 2rem;
+  }
+
+  .v-prev,
+  .v-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .v-prev {
+    left: 8px;
+  }
+
+  .v-next {
+    right: 8px;
+  }
+
+  /* On phones the photo, its caption and controls sit together in the middle
+     instead of being pinned to the screen edges. */
+  @media (max-width: 700px) {
+    .viewer[open] {
+      justify-content: center;
+    }
+
+    .viewer-top {
+      position: absolute;
+      inset: 0 0 auto;
+    }
+
+    .viewer-stage {
+      flex: 0 1 auto;
+      padding: 0;
+    }
+
+    .viewer-img {
+      max-height: calc(100dvh - 200px);
+    }
+
+    .v-prev,
+    .v-next {
+      top: auto;
+      bottom: -56px;
+      transform: none;
+    }
+
+    .viewer-bottom {
+      padding-right: 112px;
+    }
+
+    .v-prev {
+      left: auto;
+      right: calc(var(--gutter) + 40px);
+    }
+
+    .v-next {
+      right: calc(var(--gutter) - 12px);
+    }
+  }
+</style>

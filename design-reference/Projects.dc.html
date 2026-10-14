@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ZB Design Projects</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+.nav a:hover{color:#2B2A7A}
+.nav a:focus-visible,.card:focus-visible,.cta:focus-visible,.filter:focus-visible{outline:2px solid #2B2A7A;outline-offset:4px}
+.cta:hover{color:#2B2A7A}
+.motif{transform-origin:50% 50%;animation:spin 160s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tag{opacity:0;transform:translateY(6px);transition:opacity .3s ease,transform .3s ease}
+.card:hover .tag,.card:focus-visible .tag{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.motif{animation:none}.tag{transition:none}}
+@media (max-width:700px){
+.motif-wrap{width:320px!important;height:320px!important;right:-140px!important}
+}
+.img{transition:transform .5s ease}
+.card:hover .img,.card:focus-visible .img{transform:scale(1.03)}
+.card:hover .cname,.card:focus-visible .cname{text-decoration:underline;text-decoration-color:#3E9B84;text-decoration-thickness:2px;text-underline-offset:6px}
+@media (prefers-reduced-motion:reduce){.img{transition:none}}
+</style>
+</helmet>
+<div id="top" style="background: #FFFFFF; color: #111218; font-family: 'Manrope', system-ui, sans-serif; font-size: 16px; line-height: 1.5">
+
+<header style="max-width: 1440px; margin: 0 auto; padding: 28px 40px; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between">
+<a href="Main.dc.html" style="font-size: 26px; line-height: 1; letter-spacing: -0.02em"><span style="font-weight: 800; color: #2B2A7A">ZB</span> <span style="font-weight: 500; color: #3E9B84">Design</span></a>
+<nav class="nav" style="display: flex; flex-wrap: wrap; gap: 32px; font-size: 14px; font-weight: 500">
+<a href="Projects.dc.html" aria-current="page" style="color: #2B2A7A">Projects</a>
+<a href="Main.dc.html">About</a>
+<a href="Main.dc.html">Services</a>
+<a href="Main.dc.html">Expertise</a>
+<a href="Main.dc.html">Contact</a>
+</nav>
+</header>
+
+<main>
+<div style="position: relative; overflow: hidden">
+<div class="motif-wrap" aria-hidden="true" style="position: absolute; right: -60px; top: -80px; width: 520px; height: 520px; pointer-events: none">
+<svg class="motif" viewBox="0 0 600 600" width="100%" height="100%" fill="none" stroke="#2B2A7A" stroke-opacity="0.28" stroke-width="1" aria-hidden="true">
+<rect x="40" y="40" width="520" height="520" rx="146" transform="rotate(0 300 300)"/>
+<rect x="54" y="54" width="492" height="492" rx="138" transform="rotate(5 300 300)"/>
+<rect x="68" y="68" width="464" height="464" rx="130" transform="rotate(10 300 300)"/>
+<rect x="82" y="82" width="436" height="436" rx="122" transform="rotate(15 300 300)"/>
+<rect x="96" y="96" width="408" height="408" rx="114" transform="rotate(20 300 300)"/>
+<rect x="110" y="110" width="380" height="380" rx="106" transform="rotate(25 300 300)"/>
+<rect x="124" y="124" width="352" height="352" rx="99" transform="rotate(30 300 300)"/>
+<rect x="138" y="138" width="324" height="324" rx="91" transform="rotate(35 300 300)"/>
+<rect x="152" y="152" width="296" height="296" rx="83" transform="rotate(40 300 300)"/>
+<rect x="166" y="166" width="268" height="268" rx="75" transform="rotate(45 300 300)"/>
+<rect x="180" y="180" width="240" height="240" rx="67" transform="rotate(50 300 300)"/>
+<rect x="194" y="194" width="212" height="212" rx="59" transform="rotate(55 300 300)"/>
+<rect x="208" y="208" width="184" height="184" rx="52" transform="rotate(60 300 300)"/>
+<rect x="222" y="222" width="156" height="156" rx="44" transform="rotate(65 300 300)"/>
+<rect x="236" y="236" width="128" height="128" rx="36" transform="rotate(70 300 300)"/>
+<rect x="250" y="250" width="100" height="100" rx="28" transform="rotate(75 300 300)"/>
+</svg>
+</div>
+<section style="position: relative; max-width: 1440px; margin: 0 auto; padding: 72px 40px 48px; box-sizing: border-box">
+<h1 style="margin: 0; font-size: clamp(44px, 8vw, 112px); line-height: 1; font-weight: 500; letter-spacing: -0.04em">Projects<span style="color: #3E9B84">.</span></h1>
+<p style="margin: 24px 0 0; max-width: 520px; color: #5B5F6B">A selection of built and conceptual work across residential, commercial, cultural and interior projects.</p>
+</section>
+</div>
+
+<section style="max-width: 1440px; margin: 0 auto; padding: 0 40px 24px; box-sizing: border-box">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 16px; padding-top: 20px; border-top: 1px solid #E3E5E8">
+<div style="display: flex; flex-wrap: wrap; gap: 8px 28px; font-size: 14px; font-weight: 500">
+<sc-for list="{{filters}}" as="f" hint-placeholder-count="5">
+<button class="filter" type="button" aria-pressed="{{f.pressed}}" onClick="{{ f.pick }}" style="margin: 0; padding: 6px 0; background: transparent; border: 0; border-bottom: 2px solid {{f.line}}; font: inherit; color: {{f.color}}; cursor: pointer">{{f.label}}</button>
+</sc-for>
+</div>
+<span style="font-size: 14px; color: #5B5F6B">{{countLabel}}</span>
+</div>
+</section>
+
+<section style="max-width: 1440px; margin: 0 auto; padding: 24px 40px 0; box-sizing: border-box">
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr)); gap: 56px 24px">
+<sc-for list="{{cards}}" as="c" hint-placeholder-count="8">
+<a class="card" href="Project.dc.html" style="display: block">
+<div style="position: relative; overflow: hidden; width: 100%; aspect-ratio: 4 / 3; background: #E6E7EA">
+<div class="img" role="img" aria-label="Image placeholder for {{c.name}}" style="width: 100%; height: 100%; background-color: {{c.bg}}; background-image: repeating-linear-gradient(90deg, rgba(43,42,122,0.07) 0, rgba(43,42,122,0.07) 1px, transparent 1px, transparent 14px)"></div>
+<span class="tag" aria-hidden="true" style="position: absolute; left: 16px; bottom: 16px; padding: 8px 14px; background: #2B2A7A; color: #FFFFFF; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase">View project &rarr;</span>
+</div>
+<div style="margin-top: 16px; display: flex; justify-content: space-between; gap: 16px; align-items: baseline">
+<span class="cname" style="font-weight: 600; font-size: 18px">{{c.name}}</span>
+<span style="font-size: 14px; color: #5B5F6B">{{c.year}}</span>
+</div>
+<div style="margin-top: 4px; font-size: 14px; color: #5B5F6B">{{c.meta}}</div>
+</a>
+</sc-for>
+</div>
+</section>
+</main>
+
+<footer style="max-width: 1440px; margin: 0 auto; padding: 120px 40px 32px; box-sizing: border-box; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #5B5F6B">
+<span>&copy; 2026 ZB Design</span>
+<a class="cta" href="#top">Back to top &uarr;</a>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2000}}'>
+class Component extends DCLogic {
+state = { filter: 'all' };
+renderVals() {
+const all = [
+{ code: 'ZB01', name: 'Ridge House', kind: 'residential', type: 'Residential', place: 'Kuala Lumpur', year: '2026', bg: '#E6E7EA' },
+{ code: 'ZB02', name: 'Atrium Offices', kind: 'commercial', type: 'Commercial', place: 'Petaling Jaya', year: '2025', bg: '#E4E6E8' },
+{ code: 'ZB03', name: 'Courtyard Gallery', kind: 'cultural', type: 'Cultural', place: 'George Town', year: '2025', bg: '#E8E8EB' },
+{ code: 'ZB04', name: 'Tanjung Villa', kind: 'residential', type: 'Residential', place: 'Penang', year: '2024', bg: '#E5E7E9' },
+{ code: 'ZB05', name: 'Studio Loft', kind: 'interiors', type: 'Interiors', place: 'Kuala Lumpur', year: '2024', bg: '#E7E8EA' },
+{ code: 'ZB06', name: 'Harbour Pavilion', kind: 'cultural', type: 'Cultural', place: 'Johor Bahru', year: '2023', bg: '#E4E5E9' },
+{ code: 'ZB07', name: 'Terrace Row', kind: 'residential', type: 'Residential', place: 'Ipoh', year: '2023', bg: '#E8E9EB' },
+{ code: 'ZB08', name: 'Garden Cafe', kind: 'interiors', type: 'Interiors', place: 'Kuala Lumpur', year: '2022', bg: '#E5E6E9' }
+];
+const current = this.state.filter;
+const filterDefs = [
+{ key: 'all', label: 'All' },
+{ key: 'residential', label: 'Residential' },
+{ key: 'commercial', label: 'Commercial' },
+{ key: 'cultural', label: 'Cultural' },
+{ key: 'interiors', label: 'Interiors' }
+];
+const filters = filterDefs.map((f) => ({
+label: f.label,
+pressed: f.key === current ? 'true' : 'false',
+color: f.key === current ? '#2B2A7A' : '#5B5F6B',
+line: f.key === current ? '#3E9B84' : 'transparent',
+pick: () => this.setState({ filter: f.key })
+}));
+const shown = all.filter((p) => current === 'all' || p.kind === current);
+const cards = shown.map((p) => ({
+name: p.name,
+year: p.year,
+bg: p.bg,
+meta: p.code + ' · ' + p.type + ' · ' + p.place
+}));
+return {
+filters: filters,
+cards: cards,
+countLabel: shown.length + (shown.length === 1 ? ' project' : ' projects')
+};
+}
+}
+</script>
+</body>
+</html>

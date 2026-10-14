@@ -1,0 +1,8 @@
+dist
+.astro
+node_modules
+design-reference
+package-lock.json
+src/assets
+_archive
+docs
