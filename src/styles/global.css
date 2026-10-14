@@ -244,3 +244,20 @@ main:focus {
 .navy-block .meta-label {
   color: var(--on-navy-muted);
 }
+
+/* Scroll reveal (src/scripts/reveal.ts). Only active once the script has run;
+   without it, and with reduced motion, everything is simply visible. */
+.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+/* The transition lives on the revealed state only, so hiding is instant. */
+.reveal-ready [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}

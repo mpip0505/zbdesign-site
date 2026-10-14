@@ -102,18 +102,22 @@ const jsonLd: Record<string, unknown> = {
 
   <section id="about" class="container block" aria-labelledby="about-heading">
     <div class="split">
-      <h2 id="about-heading" class="label">
+      <h2 id="about-heading" class="label" data-reveal>
         About
       </h2>
       <div class="split-body">
-        <p class="statement">{about.statement}</p>
-        <p class="muted story">{about.story}</p>
-        <ul class="pills" role="list" aria-label="Working with us">
+        <p class="statement" data-reveal>
+          {about.statement}
+        </p>
+        <p class="muted story" data-reveal>
+          {about.story}
+        </p>
+        <ul class="pills" role="list" aria-label="Working with us" data-reveal>
           {about.workingWithUs.map((item) => (
             <li>{item}</li>
           ))}
         </ul>
-        <dl class="facts about-facts">
+        <dl class="facts about-facts" data-reveal>
           {about.facts.map((f) => (
             <div>
               <dt class="meta-label">{f.label}</dt>
@@ -127,15 +131,17 @@ const jsonLd: Record<string, unknown> = {
 
   <section id="services" class="container block" aria-labelledby="services-heading">
     <div class="split">
-      <h2 id="services-heading" class="label">
+      <h2 id="services-heading" class="label" data-reveal>
         Services
       </h2>
       <div class="split-body">
-        <p class="statement services-statement">{services.statement}</p>
+        <p class="statement services-statement" data-reveal>
+          {services.statement}
+        </p>
         <div class="services">
           <ul class="services-list" role="list">
             {services.items.map((s) => (
-              <li class="service">
+              <li class="service" data-reveal>
                 <span class="service-num">{s.number}</span>
                 <h3 class="service-title">{s.title}</h3>
                 <p class="service-desc">
@@ -145,7 +151,9 @@ const jsonLd: Record<string, unknown> = {
               </li>
             ))}
           </ul>
-          <p class="service-note">{services.note}</p>
+          <p class="service-note" data-reveal>
+            {services.note}
+          </p>
         </div>
       </div>
     </div>
@@ -154,20 +162,22 @@ const jsonLd: Record<string, unknown> = {
   <section id="expertise" class="expertise" aria-labelledby="expertise-heading">
     <div class="container expertise-inner">
       <div class="split">
-        <h2 id="expertise-heading" class="label">
+        <h2 id="expertise-heading" class="label" data-reveal>
           Expertise
         </h2>
         <div class="split-body">
-          <p class="statement">{expertise.statement}</p>
+          <p class="statement" data-reveal>
+            {expertise.statement}
+          </p>
           <ul class="expertise-grid" role="list">
             {expertise.items.map((item) => (
-              <li class="expertise-item">
+              <li class="expertise-item" data-reveal>
                 <h3>{item.title}</h3>
                 <p class="muted">{item.description}</p>
               </li>
             ))}
           </ul>
-          <div class="recognition">
+          <div class="recognition" data-reveal>
             <span class="muted recognition-label">{expertise.credentialsLabel}</span>
             <span class="recognition-body">{expertise.credentials}</span>
           </div>
@@ -179,14 +189,16 @@ const jsonLd: Record<string, unknown> = {
   <section id="contact" class="navy-block on-navy contact" aria-labelledby="contact-heading">
     <Motif class="contact-motif" stroke="#FFFFFF" opacity={0.18} />
     <div class="container contact-inner">
-      <h2 id="contact-heading" class="label contact-label">
+      <h2 id="contact-heading" class="label contact-label" data-reveal>
         Contact
       </h2>
-      <p class="contact-lead">{contact.lead}</p>
-      <a class="cta-inv email" href={`mailto:${contact.email}`}>
+      <p class="contact-lead" data-reveal>
+        {contact.lead}
+      </p>
+      <a class="cta-inv email" href={`mailto:${contact.email}`} data-reveal>
         {contact.email}
       </a>
-      <div class="contact-cols">
+      <div class="contact-cols" data-reveal>
         <div>
           <h3 class="contact-key">Studio</h3>
           <address>{formatAddress(contact.address)}</address>
@@ -209,6 +221,10 @@ const jsonLd: Record<string, unknown> = {
 
   <Footer slot="footer" variant="navy" />
 </BaseLayout>
+
+<script>
+  import '../scripts/reveal';
+</script>
 
 <style>
   .intro-wrap {

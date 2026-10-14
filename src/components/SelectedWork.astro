@@ -12,7 +12,7 @@ const caption = (p: ProjectWithImages) => `${p.data.title} · ${typeLabel(p)} ·
 ---
 
 <section class="container selected" aria-labelledby="selected-heading" data-index>
-  <div class="head">
+  <div class="head" data-reveal>
     <h2 id="selected-heading" class="label">
       Selected work
     </h2>
@@ -24,7 +24,7 @@ const caption = (p: ProjectWithImages) => `${p.data.title} · ${typeLabel(p)} ·
   <div class="layout">
     <ul class="list" role="list">
       {projects.map((p, i) => (
-        <li>
+        <li data-reveal>
           <button
             class:list={['row', { 'is-active': i === 0 }]}
             type="button"
@@ -42,7 +42,7 @@ const caption = (p: ProjectWithImages) => `${p.data.title} · ${typeLabel(p)} ·
       ))}
     </ul>
 
-    <div class="preview" aria-hidden="true">
+    <div class="preview" aria-hidden="true" data-reveal>
       <div class="frame">
         {projects.map(
           (p, i) =>
