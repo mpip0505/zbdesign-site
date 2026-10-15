@@ -10,7 +10,6 @@ export interface Service {
   number: string;
   title: string;
   description: string;
-  includes: string[];
 }
 
 export interface TitledItem {
@@ -30,16 +29,13 @@ export const site = {
     { label: 'Projects', href: '/projects/' },
     { label: 'About', href: '/#about' },
     { label: 'Services', href: '/#services' },
-    { label: 'Expertise', href: '/#expertise' },
+    { label: 'Approach', href: '/#approach' },
     { label: 'Contact', href: '/#contact' },
   ] satisfies NavItem[],
 
   intro: {
     // The h1 is "Interiors that think ahead." with the highlight in navy.
     headline: { before: 'Interiors that ', highlight: 'think ahead', after: '.' },
-    supporting:
-      'Interior design, renovation and smart home systems for homes and workplaces in Kuala Lumpur.',
-    meta: ['Interior Design', 'Renovation', 'Smart Home'],
     cta: { label: 'Book a free consultation', href: '/#contact' },
   },
 
@@ -52,19 +48,12 @@ export const site = {
     'Smart Home',
   ],
 
+  // Landing section. Source: docs/ABOUT US.docx, shortened.
   about: {
     statement:
-      'ZB Design is an interior design and renovation company. We design spaces that feel good to live and work in, and build them to last.',
+      'ZB Design is a leading interior design company in Kuala Lumpur, built on sustainable architecture and environmental friendliness.',
     story:
-      'From family homes to shops and offices, we look after the whole job, from the first sketch to handover: design, carpentry, painting and renovation, with smart home systems where they help. We favour daylight, fresh air and materials that last, and we work to the budget and schedule we agree at the start.',
-    workingWithUs: [
-      'Made to your brief',
-      'Clear communication',
-      'Practical design',
-      'Budget kept in view',
-      'Careful workmanship',
-      'Schedules we stick to',
-    ],
+      'From family homes to shops and offices, we handle the whole job, from the first sketch to handover: design, renovation, carpentry and painting, with smart home systems where they help.',
     facts: [
       { label: 'In practice', value: '[25 or 30+ years]' },
       { label: 'Based in', value: 'Taman Melawati, Kuala Lumpur' },
@@ -80,79 +69,78 @@ export const site = {
         title: 'Interior design',
         description:
           'Layouts, finishes, lighting and furniture, planned in 3D before anything is built.',
-        includes: [
-          '3D design visuals',
-          'Materials and finishes',
-          'Lighting plans',
-          'Furniture layout',
-        ],
       },
       {
         number: '02',
         title: 'House renovation',
         description:
           'Full and partial renovations for apartments, terrace houses, semi-ds and bungalows.',
-        includes: [
-          'Layout changes',
-          'Kitchens and bathrooms',
-          'Flooring and ceilings',
-          'Electrical and plumbing coordination',
-        ],
       },
       {
         number: '03',
         title: 'Retail shop renovation',
         description: 'Shop and showroom fit-outs planned around your opening date.',
-        includes: [
-          'Shopfront and interior',
-          'Display and joinery',
-          'Lighting',
-          'Signage coordination',
-        ],
       },
       {
         number: '04',
         title: 'Carpentry',
         description: 'Custom cabinets, wardrobes, feature walls and built-ins, made to measure.',
-        includes: ['Kitchen cabinets', 'Wardrobes', 'Wall panelling', 'Built-in storage'],
       },
       {
         number: '05',
         title: 'Painting',
         description:
           'Interior and exterior painting, using low-emission paints for healthier rooms.',
-        includes: ['Surface preparation', 'Interior', 'Exterior', 'Feature finishes'],
       },
     ] satisfies Service[],
     note: 'Other renovation work on request. Every project starts with a free consultation.',
   },
 
-  expertise: {
-    statement: 'How we approach every space.',
+  // Source: docs/ABOUT US.docx, "Our core concepts and strengths".
+  approach: {
+    statement: 'Six ideas guide every space we design.',
     items: [
+      {
+        title: 'Sustainable architecture',
+        description:
+          'Green building principles, renewable materials and less waste on every project.',
+      },
+      {
+        title: 'Environmental friendliness',
+        description:
+          'Eco-friendly materials, non-toxic paints and low-emission furnishings for healthier rooms.',
+      },
+      {
+        title: 'Energy efficiency',
+        description:
+          'Smart lighting and passive heating and cooling that cut the energy a space uses.',
+      },
       {
         title: 'Natural light and ventilation',
         description:
-          'Layouts that welcome daylight and airflow, so rooms feel better and cost less to run.',
+          'Daylight and fresh air first, so rooms need less lighting and air conditioning.',
       },
       {
-        title: 'Materials that last',
-        description:
-          'Durable, responsibly made materials and low-emission finishes for healthier rooms.',
+        title: 'Sustainable furnishings',
+        description: 'Durable, responsibly made furniture that looks good and lasts.',
       },
       {
         title: 'Biophilic design',
-        description: 'Natural materials, greenery and views that bring calm indoors.',
-      },
-      {
-        title: 'Smart home systems',
-        description:
-          'Lighting and controls planned into the design from the start, so the technology stays out of sight.',
+        description: 'Natural materials, greenery and open views that bring calm indoors.',
       },
     ] satisfies TitledItem[],
     credentialsLabel: 'Credentials',
     credentials:
       'Architectural certification · Smart home system competency · Licensed construction specialist [add registration no.]',
+  },
+
+  // Source: docs/OUR PHILOSOPHY.docx
+  // Source: docs/OUR PHILOSOPHY.docx, shortened.
+  philosophy: {
+    statement:
+      'We create living spaces and buildings shaped by sustainable architecture and care for the environment.',
+    body: "Beauty and sustainability can live together. Our team's approach has earned us a reputation for spaces that are not only stunning, but also give back to the environment.",
+    designer: { name: 'Zulbakri', role: 'Chief Designer' },
   },
 
   contact: {

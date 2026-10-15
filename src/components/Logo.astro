@@ -1,17 +1,41 @@
 ---
-// Temporary wordmark. Swap the inner markup for the official SVG logo when it arrives.
+import { Image } from 'astro:assets';
+import mark from '../assets/brand/logo-mark.png';
+// Mark cut from docs/ZBD_logo full color.jpg; the wordmark is set in Manrope to match it.
 ---
 
 <span class="logo">
-  <span class="zb">ZB</span> <span class="design">Design</span>
+  <Image class="mark" src={mark} alt="" widths={[80, 120]} sizes="40px" loading="eager" />
+  <span class="word"><span class="zb">ZB</span> <span class="design">Design</span></span>
 </span>
 
 <style>
   .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
     font-size: 1.625rem;
     line-height: 1;
     letter-spacing: -0.02em;
     white-space: nowrap;
+  }
+
+  .mark {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  @media (hover: hover) {
+    :global(a:hover) > .logo .mark {
+      transform: rotate(-6deg) scale(1.06);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mark {
+      transition: none;
+    }
   }
 
   .zb {

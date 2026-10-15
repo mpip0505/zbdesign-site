@@ -21,7 +21,7 @@ npm run format     # Prettier
 
 ## Edit copy and company details
 
-All copy lives in `src/data/site.ts`: the intro, marquee, about text, "working with us" pills, facts, services, expertise, credentials, smart home questions, contact details, and the Projects page intro.
+All copy lives in `src/data/site.ts`: the intro, marquee, about text (the landing section), facts, philosophy, services, approach (six core concepts), credentials, smart home questions, contact details, and the Projects page intro.
 
 Anything in `[square brackets]` is still waiting on the client. Search for `[` to find them.
 
@@ -85,7 +85,7 @@ To add a type (for example `education` if the client confirms it for INTI), add 
 
 TODO: get the official logo SVG from the client.
 
-The wordmark is a text placeholder in `src/components/Logo.astro`. Replace its markup with the SVG and keep the outer `.logo` element. Also replace the placeholder favicon at `public/favicon.svg`.
+The logo mark in `src/components/Logo.astro` and the favicons in `public/` are cut from `docs/ZBD_logo full color.jpg`. If a vector (SVG) logo arrives, swap it in there.
 
 ## Deploy
 

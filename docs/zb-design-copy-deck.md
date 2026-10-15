@@ -1,4 +1,4 @@
-# ZB Design: Improved Website Copy (2 pages)
+2# ZB Design: Improved Website Copy (2 pages)
 
 Source: the current site at zbdesign.com.my (Home, About Us, Services, Workflow, Gallery, Contact, plus a sample of project pages). This deck rewrites that content for the new two-page design: **Home** and **Projects**. The Workflow page is dropped, as the designer suggested.
 
@@ -48,41 +48,44 @@ Anything in `[brackets]` is a fact I could not confirm from the current site. As
 - **Link:** View all projects →
 - Rows show name, type and year. Project list is in section 4.
 
-### About
+### About (the landing section, beside the large logo mark)
 
-- **Statement:** ZB Design is a Kuala Lumpur interior design and renovation company. We design spaces that feel good to live and work in, and build them to last.
-- **Paragraph:** From family homes to shops and offices, we look after the whole job, from the first sketch to handover: design, carpentry, painting and renovation, with smart home systems where they help. We favour daylight, fresh air and materials that last, and we work to the budget and schedule we agree at the start.
-- **Working with us** (six short points, from the current "Our Forte"):
-  - Made to your brief
-  - Clear, easy communication
-  - Practical design
-  - Budget kept in view
-  - Careful workmanship
-  - Schedules we stick to
-- **Credentials row:** Architectural certification · Smart home system competency · Licensed construction specialist `[add registration number]`
+*Source: the client's ABOUT US.docx, shortened. The "Interiors that think ahead." headline and the consultation button stay above it.*
+
+- **Statement:** ZB Design is a leading interior design company in Kuala Lumpur, built on sustainable architecture and environmental friendliness.
+- **Paragraph:** From family homes to shops and offices, we handle the whole job, from the first sketch to handover: design, renovation, carpentry and painting, with smart home systems where they help.
 - **Facts:** In practice for `[25 or 30+ years: confirm]` · Based in Taman Melawati, Kuala Lumpur · ZB Design Sdn. Bhd. `[SSM number]`
+
+### Our philosophy (after About, on a grey field with the chief designer's portrait)
+
+*Source: the client's OUR PHILOSOPHY.docx, shortened. Portrait: docs/Pics/zulbakri.png.*
+
+- **Statement:** We create living spaces and buildings shaped by sustainable architecture and care for the environment.
+- **Paragraph:** Beauty and sustainability can live together. Our team's approach has earned us a reputation for spaces that are not only stunning, but also give back to the environment.
+- **Signed:** Zulbakri, Chief Designer `[confirm full name and title]`
 
 ### Services
 
 - **Statement:** One team for design, build and the technology inside.
-- **01 Interior design:** Layouts, finishes, lighting and furniture, planned in 3D before anything is built. *Includes: 3D design visuals · Materials and finishes · Lighting plans · Furniture layout*
-- **02 House renovation:** Full and partial renovations for apartments, terrace houses, semi-ds and bungalows. *Includes: Layout changes · Kitchens and bathrooms · Flooring and ceilings · Electrical and plumbing coordination*
-- **03 Retail shop renovation:** Shop and showroom fit-outs planned around your opening date. *Includes: Shopfront and interior · Display and joinery · Lighting · Signage coordination*
-- **04 Carpentry:** Custom cabinets, wardrobes, feature walls and built-ins, made to measure. *Includes: Kitchen cabinets · Wardrobes · Wall panelling · Built-in storage*
-- **05 Painting:** Interior and exterior painting, using low-emission paints for healthier rooms. *Includes: Surface preparation · Interior · Exterior · Feature finishes*
+- **01 Interior design:** Layouts, finishes, lighting and furniture, planned in 3D before anything is built.
+- **02 House renovation:** Full and partial renovations for apartments, terrace houses, semi-ds and bungalows.
+- **03 Retail shop renovation:** Shop and showroom fit-outs planned around your opening date.
+- **04 Carpentry:** Custom cabinets, wardrobes, feature walls and built-ins, made to measure.
+- **05 Painting:** Interior and exterior painting, using low-emission paints for healthier rooms.
 - **Closing line:** Other renovation work on request. Every project starts with a free consultation.
 
-*The "Includes" lines are my drafts based on the service names. The current site lists the services without any detail, so the client should confirm or edit them.*
+### Approach (replaces Expertise; nav label "Approach")
 
-### Expertise (replaces the grid in the design)
+*Source: the client's ABOUT US.docx, "Our core concepts and strengths", cut to one line each.*
 
-- **Statement:** How we approach every space.
-- **Natural light and ventilation:** Layouts that welcome daylight and airflow, so rooms feel better and cost less to run.
-- **Materials that last:** Durable, responsibly made materials and low-emission finishes for healthier rooms.
-- **Biophilic design:** Natural materials, greenery and views that bring calm indoors.
-- **Smart home systems:** Lighting and controls planned into the design from the start, so the technology stays out of sight.
-- *The current site's About Us page lists six concepts (sustainable architecture, environmental friendliness, energy efficiency, daylight, sustainable furnishings, biophilic design). That is too much for a showcase site, so they are merged into these four. The concepts are about design, not smart home, so smart home is one item here rather than the lead.*
-- **Credentials row** (replaces "Recognition"): Architectural certification · Smart home system competency · Licensed construction specialist
+- **Statement:** Six ideas guide every space we design.
+- **Sustainable architecture:** Green building principles, renewable materials and less waste on every project.
+- **Environmental friendliness:** Eco-friendly materials, non-toxic paints and low-emission furnishings for healthier rooms.
+- **Energy efficiency:** Smart lighting and passive heating and cooling that cut the energy a space uses.
+- **Natural light and ventilation:** Daylight and fresh air first, so rooms need less lighting and air conditioning.
+- **Sustainable furnishings:** Durable, responsibly made furniture that looks good and lasts.
+- **Biophilic design:** Natural materials, greenery and open views that bring calm indoors.
+- **Credentials row:** Architectural certification · Smart home system competency · Licensed construction specialist
 
 ### Smart home questions (optional section above Contact, as a simple accordion)
 
