@@ -160,7 +160,7 @@ export const site = {
   projectsPage: {
     title: 'Projects',
     intro:
-      'Selected interior projects from 2020 to 2023, shown from first 3D design to finished space.',
+      'Selected interior projects from 2021 to 2023, shown from first 3D design to finished space.',
     description:
       'Interior design and renovation projects by ZB Design, shown from first 3D design to finished space.',
   },

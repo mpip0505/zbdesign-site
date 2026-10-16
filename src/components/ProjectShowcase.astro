@@ -1,0 +1,460 @@
+---
+import { Image } from 'astro:assets';
+import { typeLabel, type ProjectWithImages } from '../data/projects';
+import { site } from '../data/site';
+
+interface Props {
+  projects: ProjectWithImages[];
+}
+
+// Projects page: one project leads at the top and the other six sit in a
+// 3-up grid below.
+// The lead rotates through all seven (src/scripts/project-showcase.ts).
+const MAX_PROJECTS = 7;
+const ROTATE_MS = 4500;
+
+const projects = Astro.props.projects.slice(0, MAX_PROJECTS);
+const lead = projects[0];
+const meta = (p: ProjectWithImages) => `${p.data.code} · ${typeLabel(p)} · ${p.data.year}`;
+---
+
+<section
+  class="container showcase"
+  aria-label="Highlighted projects"
+  data-showcase
+  style={`--rotate-ms: ${ROTATE_MS}ms`}
+>
+
+  {lead && (
+    <div class="lead" data-reveal>
+      <div class="frame lead-frame">
+        {projects.map(
+          (p, i) =>
+            p.cover && (
+              <Image
+                src={p.cover}
+                alt=""
+                widths={[800, 1280, 1600, 2000]}
+                sizes="(min-width: 1440px) 1376px, 100vw"
+                loading={i === 0 ? 'eager' : 'lazy'}
+                class:list={['shot', { 'is-active': i === 0 }]}
+                data-shot={i}
+              />
+            ),
+        )}
+        {site.showPlaceholderLabels && (
+          <span class="ph-label" data-lead-code>
+            Preview &middot; {lead.data.code}
+          </span>
+        )}
+        <span class="tag" aria-hidden="true">
+          View project &rarr;
+        </span>
+      </div>
+
+      <div class="lead-bar">
+        <div>
+          <h2 class="lead-name">
+            <button
+              class="lead-btn"
+              type="button"
+              aria-haspopup="dialog"
+              data-open-project={lead.id}
+              data-lead-open
+            >
+              {lead.data.title}
+            </button>
+          </h2>
+          <p class="muted lead-meta" data-lead-meta>
+            {meta(lead)}
+          </p>
+        </div>
+
+        <div class="controls">
+          <div class="dots" role="group" aria-label="Choose the featured project">
+            {projects.map((p, i) => (
+              <button
+                class:list={['dot', { 'is-active': i === 0 }]}
+                type="button"
+                aria-label={p.data.title}
+                aria-pressed={i === 0 ? 'true' : 'false'}
+                data-pick={i}
+                data-id={p.id}
+                data-title={p.data.title}
+                data-code={p.data.code}
+                data-meta={meta(p)}
+              >
+                <span class="dot-fill" />
+              </button>
+            ))}
+          </div>
+          <button class="pause" type="button" aria-pressed="false" data-pause>
+            Pause
+          </button>
+        </div>
+      </div>
+    </div>
+  )}
+
+  <ul class="grid" role="list">
+    {projects.map((p, i) => (
+      <li class="card" data-tile={i} hidden={i === 0} data-reveal>
+        <div class="frame card-frame">
+          {p.cover && (
+            <Image
+              src={p.cover}
+              alt=""
+              widths={[380, 560, 760]}
+              sizes="(min-width: 1440px) 443px, (min-width: 900px) 31vw, 47vw"
+              class="card-img"
+            />
+          )}
+        </div>
+        <div class="card-head">
+          <h2 class="card-name">
+            <button class="card-btn" type="button" aria-haspopup="dialog" data-open-project={p.id}>
+              {p.data.title}
+            </button>
+          </h2>
+          <span class="muted card-small">{p.data.year}</span>
+        </div>
+        <p class="muted card-small card-meta">
+          {p.data.code} &middot; {typeLabel(p)}
+        </p>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<script>
+  import '../scripts/project-showcase';
+</script>
+
+<style>
+  .showcase {
+    padding-top: 24px;
+  }
+
+  /* Lead project */
+
+  .lead {
+    position: relative;
+  }
+
+  .lead-frame {
+    aspect-ratio: 16 / 7;
+  }
+
+  .lead-frame :global(.shot) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition:
+      opacity 0.9s ease,
+      transform 0.5s ease;
+  }
+
+  .lead-frame :global(.shot.is-active) {
+    opacity: 1;
+  }
+
+  .lead-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px 32px;
+    padding-top: 20px;
+  }
+
+  .lead-name {
+    font-size: clamp(1.375rem, 2.4vw, 1.875rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+
+  .lead-meta {
+    margin-top: 6px;
+    font-size: 0.875rem;
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  /* Each dot is a short bar; the active one fills over the rotation time. */
+  .dot {
+    position: relative;
+    width: 28px;
+    height: 24px;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+  }
+
+  .dot::before,
+  .dot-fill {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 11px;
+    height: 2px;
+  }
+
+  .dot::before {
+    background: var(--line-strong);
+  }
+
+  .dot-fill {
+    background: var(--navy);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .dot.is-active .dot-fill {
+    animation: fill var(--rotate-ms) linear forwards;
+  }
+
+  .is-paused .dot.is-active .dot-fill {
+    animation-play-state: paused;
+  }
+
+  /* Paused by the user or reduced motion: show the active dot as full. */
+  .is-stopped .dot.is-active .dot-fill {
+    animation: none;
+    transform: none;
+  }
+
+  @keyframes fill {
+    to {
+      transform: none;
+    }
+  }
+
+  .pause {
+    margin: 0;
+    padding: 6px 0;
+    background: transparent;
+    border: 0;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  /* The pause button only matters when rotation runs, which needs JS. */
+  :global(html:not(.js)) .controls {
+    display: none;
+  }
+
+  /* Grid of the other six */
+
+  .grid {
+    margin: 0;
+    padding: 56px 0 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 48px 24px;
+  }
+
+  .grid li[hidden] {
+    display: none;
+  }
+
+  /* A project returning from the lead fades into its new place. */
+  .card.is-entering {
+    animation: enter 0.7s ease both;
+  }
+
+  @keyframes enter {
+    from {
+      opacity: 0;
+    }
+  }
+
+  .card-frame {
+    aspect-ratio: 4 / 3;
+    transition: transform 0.15s ease-out;
+  }
+
+  .card-head {
+    margin-top: 14px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: baseline;
+  }
+
+  .card-name {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .card-small {
+    font-size: 0.875rem;
+  }
+
+  .card-meta {
+    margin-top: 4px;
+  }
+
+  /* Shared card behaviour: the title button's hit area covers the whole card. */
+  .lead,
+  .card {
+    position: relative;
+  }
+
+  .lead-btn,
+  .card-btn {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    font: inherit;
+    letter-spacing: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .lead-btn::after,
+  .card-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  /* The controls sit above the lead's hit area so they stay clickable. */
+  .controls {
+    position: relative;
+    z-index: 1;
+  }
+
+  .lead-btn:focus-visible,
+  .card-btn:focus-visible {
+    outline: none;
+  }
+
+  .lead:has(.lead-btn:focus-visible) .lead-frame,
+  .card:has(.card-btn:focus-visible) {
+    outline: 2px solid var(--navy);
+    outline-offset: 4px;
+  }
+
+  .frame :global(.card-img) {
+    transition: transform 0.5s ease;
+  }
+
+  .card:active .card-frame {
+    transform: scale(0.98);
+    transition-duration: 0.08s;
+  }
+
+  .tag {
+    position: absolute;
+    right: 20px;
+    bottom: 16px;
+    padding: 8px 14px;
+    background: var(--navy);
+    color: #ffffff;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .lead:has(.lead-btn:focus-visible) .tag {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (hover: hover) {
+    .lead:has(.lead-btn:hover) .tag {
+      opacity: 1;
+      transform: none;
+    }
+
+    .lead:has(.lead-btn:hover) .lead-name,
+    .card:hover .card-name {
+      text-decoration: underline;
+      text-decoration-color: var(--teal);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 6px;
+    }
+
+    .card:hover :global(.card-img) {
+      transform: scale(1.03);
+    }
+
+    .pause:hover {
+      color: var(--navy);
+    }
+  }
+
+  @media (hover: none) {
+    .tag {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .lead-frame {
+      aspect-ratio: 4 / 3;
+    }
+
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 32px 16px;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .card-head {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .card-name {
+      font-size: 0.9375rem;
+    }
+
+    .card-small {
+      font-size: 0.8125rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lead-frame :global(.shot),
+    .frame :global(.card-img),
+    .card-frame,
+    .tag {
+      transition: none;
+    }
+
+    .card.is-entering {
+      animation: none;
+    }
+  }
+</style>

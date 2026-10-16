@@ -1,20 +1,15 @@
 ---
-import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Footer from '../../components/Footer.astro';
 import Motif from '../../components/Motif.astro';
+import ProjectShowcase from '../../components/ProjectShowcase.astro';
 import ProjectViewer from '../../components/ProjectViewer.astro';
-import { getProjects, typeLabel, typeLabels } from '../../data/projects';
-import { projectTypes } from '../../content.config';
+import { getProjects } from '../../data/projects';
 import { site } from '../../data/site';
 
-const projects = await getProjects();
+// Featured projects only; the showcase shows the first seven.
+const projects = (await getProjects()).filter((p) => p.data.featured);
 const page = site.projectsPage;
-const filters = [
-  { key: 'all', label: 'All' },
-  ...projectTypes.map((t) => ({ key: t, label: typeLabels[t] })),
-];
-const countLabel = (n: number) => `${n} ${n === 1 ? 'project' : 'projects'}`;
 ---
 
 <BaseLayout title={page.title} description={page.description}>
@@ -31,73 +26,12 @@ const countLabel = (n: number) => `${n} ${n === 1 ? 'project' : 'projects'}`;
     </section>
   </div>
 
-  <div class="container" data-filter-root>
-    <div class="filter-bar">
-      <div class="filters" role="group" aria-label="Filter projects by type">
-        {filters.map((f) => (
-          <button
-            class="filter"
-            type="button"
-            data-filter={f.key}
-            aria-pressed={f.key === 'all' ? 'true' : 'false'}
-          >
-            {f.label}
-          </button>
-        ))}
-      </div>
-      <p class="count" aria-live="polite" data-filter-count>
-        {countLabel(projects.length)}
-      </p>
-    </div>
-
-    <ul class="grid" role="list">
-      {projects.map((p, i) => (
-        <li class="card" data-type={p.data.type}>
-          <div class="frame card-frame">
-            {p.cover && (
-              <Image
-                src={p.cover}
-                alt=""
-                widths={[380, 560, 760, 1120]}
-                sizes="(min-width: 1440px) 437px, (min-width: 1270px) 33vw, (min-width: 864px) 50vw, 100vw"
-                loading={i < 3 ? 'eager' : 'lazy'}
-                fetchpriority={i === 0 ? 'high' : undefined}
-                class="card-img"
-              />
-            )}
-            <span class="tag" aria-hidden="true">
-              View project &rarr;
-            </span>
-          </div>
-          <div class="card-head">
-            <h2 class="card-name">
-              <button
-                class="card-btn"
-                type="button"
-                aria-haspopup="dialog"
-                data-open-project={p.id}
-              >
-                {p.data.title}
-              </button>
-            </h2>
-            <span class="muted card-small">{p.data.year}</span>
-          </div>
-          <p class="muted card-small card-meta">
-            {p.data.code} &middot; {typeLabel(p)}
-          </p>
-        </li>
-      ))}
-    </ul>
-  </div>
+  <ProjectShowcase projects={projects} />
 
   <ProjectViewer projects={projects} />
 
   <Footer slot="footer" variant="light" />
 </BaseLayout>
-
-<script>
-  import '../../scripts/filter';
-</script>
 
 <style>
   .intro-wrap {
@@ -121,207 +55,5 @@ const countLabel = (n: number) => `${n} ${n === 1 ? 'project' : 'projects'}`;
   .lead {
     margin-top: 24px;
     max-width: 520px;
-  }
-
-  .filter-bar {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 16px;
-    padding-top: 20px;
-    padding-bottom: 24px;
-    border-top: 1px solid var(--line);
-  }
-
-  .filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 28px;
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
-
-  /* Filtering needs JS; without it every project simply stays visible. */
-  :global(html:not(.js)) .filters {
-    display: none;
-  }
-
-  .filter {
-    margin: 0;
-    padding: 6px 0;
-    background: transparent;
-    border: 0;
-    border-bottom: 2px solid transparent;
-    color: var(--muted);
-    cursor: pointer;
-  }
-
-  @media (hover: hover) {
-    .filter:hover {
-      color: var(--navy);
-    }
-  }
-
-  .filter:active {
-    opacity: 0.6;
-  }
-
-  .filter[aria-pressed='true'] {
-    color: var(--navy);
-    border-bottom-color: var(--teal);
-  }
-
-  .count {
-    font-size: 0.875rem;
-    color: var(--muted);
-  }
-
-  .grid {
-    margin: 0;
-    padding: 24px 0 0;
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
-    gap: 56px 24px;
-  }
-
-  .grid li[hidden] {
-    display: none;
-  }
-
-  .card {
-    position: relative;
-  }
-
-  /* The title button's hit area covers the whole card. */
-  .card-btn {
-    margin: 0;
-    padding: 0;
-    background: transparent;
-    border: 0;
-    font: inherit;
-    text-align: left;
-    cursor: pointer;
-  }
-
-  .card-btn::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-  }
-
-  .card-btn:focus-visible {
-    outline: none;
-  }
-
-  .card:has(.card-btn:focus-visible) {
-    outline: 2px solid var(--navy);
-    outline-offset: 4px;
-  }
-
-  .card-frame {
-    aspect-ratio: 4 / 3;
-    transition: transform 0.15s ease-out;
-  }
-
-  /* Instant press feedback, on pointer-down. */
-  .card:active .card-frame {
-    transform: scale(0.98);
-    transition-duration: 0.08s;
-  }
-
-  .frame :global(.card-img) {
-    transition: transform 0.5s ease;
-  }
-
-  .card:has(.card-btn:focus-visible) :global(.card-img) {
-    transform: scale(1.03);
-  }
-
-  .tag {
-    position: absolute;
-    left: 16px;
-    bottom: 16px;
-    padding: 8px 14px;
-    background: var(--navy);
-    color: #ffffff;
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    opacity: 0;
-    transform: translateY(6px);
-    transition:
-      opacity 0.3s ease,
-      transform 0.3s ease;
-  }
-
-  .card:has(.card-btn:focus-visible) .tag {
-    opacity: 1;
-    transform: none;
-  }
-
-  /* Mouse: reveal the cues on hover. Touch: there is no hover, so the
-     "View project" tag is always visible to show the card opens something. */
-  @media (hover: hover) {
-    .card:hover :global(.card-img) {
-      transform: scale(1.03);
-    }
-
-    .card:hover .tag {
-      opacity: 1;
-      transform: none;
-    }
-
-    .card:hover .card-name {
-      text-decoration: underline;
-      text-decoration-color: var(--teal);
-      text-decoration-thickness: 2px;
-      text-underline-offset: 6px;
-    }
-  }
-
-  @media (hover: none) {
-    .tag {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  .card-head {
-    margin-top: 16px;
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    align-items: baseline;
-  }
-
-  .card-name {
-    font-size: 1.125rem;
-    font-weight: 600;
-    line-height: 1.5;
-  }
-
-  .card:has(.card-btn:focus-visible) .card-name {
-    text-decoration: underline;
-    text-decoration-color: var(--teal);
-    text-decoration-thickness: 2px;
-    text-underline-offset: 6px;
-  }
-
-  .card-small {
-    font-size: 0.875rem;
-  }
-
-  .card-meta {
-    margin-top: 4px;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .frame :global(.card-img),
-    .tag,
-    .card-frame {
-      transition: none;
-    }
   }
 </style>
