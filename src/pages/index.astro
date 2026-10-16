@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logoMark from '../assets/brand/logo-mark.png';
-import portrait from '../assets/team/zulbakri.png';
+import portrait from '../assets/team/zulbakri.jpg';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Footer from '../components/Footer.astro';
 import Motif from '../components/Motif.astro';
@@ -103,8 +103,8 @@ const jsonLd: Record<string, unknown> = {
         <Image
           src={portrait}
           alt={`${philosophy.designer.name}, ${philosophy.designer.role} of ZB Design`}
-          widths={[302]}
-          sizes="302px"
+          widths={[460, 640]}
+          sizes="(max-width: 900px) min(90vw, 380px), 460px"
         />
       </figure>
     </div>
@@ -454,8 +454,8 @@ const jsonLd: Record<string, unknown> = {
     background: #e8e9eb; /* the portrait's own backdrop, so its edges disappear */
   }
 
-  /* The designer faces right, so the portrait takes the left column and
-     looks towards the words. Source order stays text first for reading. */
+  /* The portrait takes the left column, beside the words.
+     Source order stays text first for reading. */
   .philosophy-inner {
     display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
@@ -501,7 +501,7 @@ const jsonLd: Record<string, unknown> = {
     grid-area: portrait;
     margin: 0;
     justify-self: end;
-    width: min(100%, 340px);
+    width: min(100%, 460px);
   }
 
   .portrait img {
@@ -520,8 +520,8 @@ const jsonLd: Record<string, unknown> = {
     }
 
     .portrait {
-      justify-self: start;
-      width: min(80%, 300px);
+      justify-self: center;
+      width: min(90%, 380px);
     }
   }
 

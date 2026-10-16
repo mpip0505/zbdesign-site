@@ -58,7 +58,7 @@ Anything in `[brackets]` is a fact I could not confirm from the current site. As
 
 ### Our philosophy (after About, on a grey field with the chief designer's portrait)
 
-*Source: the client's OUR PHILOSOPHY.docx, shortened. Portrait: docs/Pics/zulbakri.png.*
+*Source: the client's OUR PHILOSOPHY.docx, shortened. Portrait: docs/Pics/zulbakri.jpeg.*
 
 - **Statement:** We create living spaces and buildings shaped by sustainable architecture and care for the environment.
 - **Paragraph:** Beauty and sustainability can live together. Our team's approach has earned us a reputation for spaces that are not only stunning, but also give back to the environment.
