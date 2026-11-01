@@ -56,6 +56,10 @@ export function typeLabel(project: Project): string {
   return project.data.typeConfirmed ? label : `[${label}]`;
 }
 
+export function categoryLabel(project: Project): string {
+  return project.data.categories.join(' · ');
+}
+
 /** All projects with their images, newest first. */
 export async function getProjects(): Promise<ProjectWithImages[]> {
   const projects = await getCollection('projects');
@@ -88,7 +92,7 @@ export async function toViewerProject(project: ProjectWithImages): Promise<Viewe
     );
   return {
     title,
-    caption: `${title} · ${typeLabel(project)} · ${year}`,
+    caption: [title, typeLabel(project), year, ...project.data.categories].join(' · '),
     design: await convert('design'),
     completion: await convert('completion'),
   };

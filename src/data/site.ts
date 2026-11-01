@@ -147,6 +147,7 @@ export const site = {
     lead: "Let's talk about your space. Tell us what you have in mind and we'll arrange a free consultation and site visit.",
     email: 'zul@zbdesign.com.my',
     phone: { display: '019-674 1864', tel: '+60196741864' },
+    whatsapp: { label: 'WhatsApp us', href: 'https://wa.me/60196741864' },
     address: {
       street: 'No. 234B & 234C, Jalan Bandar 13',
       locality: 'Taman Melawati',
@@ -160,13 +161,13 @@ export const site = {
   projectsPage: {
     title: 'Projects',
     intro:
-      'Selected interior projects from 2021 to 2023, shown from first 3D design to finished space.',
+      'Selected interior projects from 2021 to 2026, shown from first 3D design to finished space.',
     description:
       'Interior design and renovation projects by ZB Design, shown from first 3D design to finished space.',
   },
 
   // Set to false once real photography replaces the generated placeholders.
-  showPlaceholderLabels: true,
+  showPlaceholderLabels: false,
 } as const;
 
 export function formatAddress(a: typeof site.contact.address): string {

@@ -175,9 +175,18 @@ const jsonLd: Record<string, unknown> = {
       <p class="contact-lead" data-reveal>
         {contact.lead}
       </p>
-      <a class="cta-inv email" href={`mailto:${contact.email}`} data-reveal>
-        {contact.email}
+      <a
+        class="cta-inv whatsapp"
+        href={contact.whatsapp.href}
+        target="_blank"
+        rel="noopener"
+        data-reveal
+      >
+        {contact.whatsapp.label} &rarr;
       </a>
+      <p class="whatsapp-number" data-reveal>
+        {contact.phone.display}
+      </p>
       <div class="contact-cols" data-reveal>
         <div>
           <h3 class="contact-key">Studio</h3>
@@ -190,6 +199,12 @@ const jsonLd: Record<string, unknown> = {
           </a>
         </div>
         <div>
+          <h3 class="contact-key">Email</h3>
+          <a class="cta-inv" href={`mailto:${contact.email}`}>
+            {contact.email}
+          </a>
+        </div>
+        <div>
           <h3 class="contact-key">{contact.consultation.label}</h3>
           <p>{contact.consultation.value}</p>
         </div>
@@ -197,7 +212,7 @@ const jsonLd: Record<string, unknown> = {
     </div>
   </section>
 
-  <ProjectViewer projects={projects} />
+  <ProjectViewer projects={featured} />
 
   <Footer slot="footer" variant="navy" />
 </BaseLayout>
@@ -451,7 +466,7 @@ const jsonLd: Record<string, unknown> = {
   }
 
   .philosophy {
-    background: #e8e9eb; /* the portrait's own backdrop, so its edges disappear */
+    background: #e6f1fe; /* the portrait's own backdrop, so its edges disappear */
   }
 
   /* The portrait takes the left column, beside the words.
@@ -504,8 +519,17 @@ const jsonLd: Record<string, unknown> = {
     width: min(100%, 460px);
   }
 
+  /* Feather the top and sides so the photo's backdrop melts into the field. */
   .portrait img {
     width: 100%;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+      linear-gradient(to bottom, transparent, #000 2%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+      linear-gradient(to bottom, transparent, #000 2%);
+    mask-composite: intersect;
   }
 
   @media (max-width: 900px) {
@@ -568,7 +592,7 @@ const jsonLd: Record<string, unknown> = {
     margin-bottom: 24px;
   }
 
-  .email {
+  .whatsapp {
     display: inline-block;
     max-width: 100%;
     font-size: clamp(1.75rem, 6vw, 5.5rem);
@@ -576,6 +600,12 @@ const jsonLd: Record<string, unknown> = {
     font-weight: 500;
     letter-spacing: -0.035em;
     overflow-wrap: anywhere;
+  }
+
+  .whatsapp-number {
+    margin-top: 16px;
+    font-size: 1.125rem;
+    color: var(--on-navy-muted);
   }
 
   .contact-cols {

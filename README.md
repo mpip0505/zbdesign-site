@@ -41,6 +41,9 @@ year: 2023
 type: residential # residential | commercial
 featured: true # show on the Home page (Selected work)
 typeConfirmed: true # false shows the type in [brackets] until the client confirms it
+categories: # work done, shown on the Projects page and in the viewer
+  - Interior Design
+  - Carpentry
 ---
 ```
 
@@ -71,7 +74,7 @@ The `<slug>` must be the same in both places.
 
 ### Replacing the placeholders
 
-The current images are neutral generated placeholders.
+The seven featured projects use real photography. Projects with `featured: false` still have neutral generated placeholders and don't appear on the site.
 
 - When real images arrive, delete a project's placeholder files and drop the real ones in.
 - `npm run placeholders` recreates any missing placeholders (pass `-- --force` to overwrite). It also creates `public/og-default.png`, the default social-sharing image.

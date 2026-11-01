@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import { typeLabel, type ProjectWithImages } from '../data/projects';
+import { categoryLabel, typeLabel, type ProjectWithImages } from '../data/projects';
 import { site } from '../data/site';
 
 interface Props {
@@ -68,6 +68,9 @@ const meta = (p: ProjectWithImages) => `${p.data.code} · ${typeLabel(p)} · ${p
           <p class="muted lead-meta" data-lead-meta>
             {meta(lead)}
           </p>
+          <p class="muted lead-categories" data-lead-categories>
+            {categoryLabel(lead)}
+          </p>
         </div>
 
         <div class="controls">
@@ -83,6 +86,7 @@ const meta = (p: ProjectWithImages) => `${p.data.code} · ${typeLabel(p)} · ${p
                 data-title={p.data.title}
                 data-code={p.data.code}
                 data-meta={meta(p)}
+                data-categories={categoryLabel(p)}
               >
                 <span class="dot-fill" />
               </button>
@@ -121,6 +125,7 @@ const meta = (p: ProjectWithImages) => `${p.data.code} · ${typeLabel(p)} · ${p
         <p class="muted card-small card-meta">
           {p.data.code} &middot; {typeLabel(p)}
         </p>
+        <p class="muted card-small">{categoryLabel(p)}</p>
       </li>
     ))}
   </ul>
@@ -179,6 +184,11 @@ const meta = (p: ProjectWithImages) => `${p.data.code} · ${typeLabel(p)} · ${p
 
   .lead-meta {
     margin-top: 6px;
+    font-size: 0.875rem;
+  }
+
+  .lead-categories {
+    margin-top: 2px;
     font-size: 0.875rem;
   }
 

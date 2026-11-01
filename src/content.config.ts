@@ -16,6 +16,7 @@ const projects = defineCollection({
     type: z.enum(projectTypes),
     featured: z.boolean().default(false),
     typeConfirmed: z.boolean().default(true),
+    categories: z.array(z.string()).default([]),
   }),
 });
 

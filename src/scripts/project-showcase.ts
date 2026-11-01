@@ -13,6 +13,7 @@ if (root) {
   const dots = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-pick]'));
   const openBtn = root.querySelector<HTMLButtonElement>('[data-lead-open]');
   const metaEl = root.querySelector<HTMLElement>('[data-lead-meta]');
+  const categoriesEl = root.querySelector<HTMLElement>('[data-lead-categories]');
   const codeEl = root.querySelector<HTMLElement>('[data-lead-code]');
   const pauseBtn = root.querySelector<HTMLButtonElement>('[data-pause]');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -74,6 +75,7 @@ if (root) {
       openBtn.textContent = dot.dataset.title ?? '';
     }
     if (dot && metaEl) metaEl.textContent = dot.dataset.meta ?? '';
+    if (dot && categoriesEl) categoriesEl.textContent = dot.dataset.categories ?? '';
     if (dot && codeEl) codeEl.textContent = `Preview · ${dot.dataset.code ?? ''}`;
 
     lead = next;
